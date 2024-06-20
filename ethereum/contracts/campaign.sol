@@ -21,7 +21,7 @@ contract CampaignContract {
         _;
     }
 
-    function Campaign(uint min) public {
+    constructor(uint min) {
         manager = msg.sender;
         minContribution = min;
     }
@@ -31,4 +31,15 @@ contract CampaignContract {
 
         approvers.push(msg.sender);
     } 
+
+    function createRequests(string memory description, uint value, address recipient) public restricted {
+        Request memory newRequest = Request({
+            description: description,
+            value: value,
+            recipient: recipient,
+            complete: false
+        });
+
+        requests.push(newRequest); 
+    }
 }
