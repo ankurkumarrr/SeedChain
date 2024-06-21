@@ -2,12 +2,25 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+contract CampaignFactory {
+    address[] public deployedCampaigns;
+
+    function createCampaign(uint min) public {
+        Campaign newCampaign = new Campaign(min, msg.sender);
+        deployedCampaigns.push(address(newCampaign));
+    } 
+
+    function getDeployedCampaigns() public view returns (address[] memory) {
+        return deployedCampaigns;
+    }
+}
+
 contract Campaign {
 
-    struct Request{
+    struct Request {
         string description;
         uint value;
-        address recipient;
+        address payable recipient;
         bool complete;
         uint approvalCount;
         mapping(address => bool) approvals;
@@ -17,24 +30,28 @@ contract Campaign {
     address public manager;
     uint public minContribution;
     mapping(address => bool) public approvers;
+    uint public approversCount;
     
     modifier restricted() {
-        require(msg.sender == manager);
+        require(msg.sender == manager, "Only manager can call this function");
         _;
     }
 
-    constructor(uint min) {
-        manager = msg.sender;
+    constructor(uint min, address creator) {
+        manager = creator;    
         minContribution = min;
     }
 
-    function Contribute() public payable {
+    function contribute() public payable {
         require(msg.value > minContribution);
 
-        approvers[msg.sender] = true;
+        if (!approvers[msg.sender]) {
+            approvers[msg.sender] = true;
+            approversCount++;
+        }
     } 
 
-    function createRequests(string memory description, uint value, address recipient) public restricted {
+    function createRequest(string memory description, uint value, address payable recipient) public restricted {
         Request storage newRequest = requests.push();
         newRequest.description = description;
         newRequest.value = value;
@@ -47,11 +64,22 @@ contract Campaign {
     function approveRequest(uint index) public  {
         Request storage request = requests[index];
 
-        require(approvers[msg.sender]);
-        require(!request.approvals[msg.sender]);
+        require(approvers[msg.sender], "Only approvers can approve requests");
+        require(!request.approvals[msg.sender], "You have already approved this request");
         
         request.approvals[msg.sender] = true;
         request.approvalCount++;
+    }
+
+    function finalizeRequest(uint index) public restricted {
+        Request storage request = requests[index];
+
+        require(request.approvalCount > (approversCount/2), "Not enough approvals");
+        require(!request.complete, "Request already finalized");
+        require(address(this).balance >= request.value, "Not enough balance in the contract");
+
+        request.recipient.transfer(request.value);
+        request.complete = true;
     }
 
 }
