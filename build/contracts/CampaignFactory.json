@@ -18,8 +18,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -45,8 +44,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"min\",\"type\":\"uint256\"}],\"name\":\"createCampaign\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"deployedCampaigns\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDeployedCampaigns\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Campaign.sol\":\"CampaignFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Campaign.sol\":{\"keccak256\":\"0x3f2ed30367b2e50a168ace30f65b4d8977eeaa15e90c719030977121ebdb4316\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://78d00b45479c7aab9994becf2313029fb0d2354565499397bc6efedabe7f72b4\",\"dweb:/ipfs/QmRwQtgwj8X1scKKswijAoEELNaTsSmL5ge4v8ZPTbeEyr\"]}},\"version\":1}",
@@ -4452,13 +4450,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x47D25cCe86CEeE2421Ac325a642a9Bf8239fdb77",
-      "transactionHash": "0x029013c64b9261271abf4619f899de8fe2eff12b5730723c60fced17ef93d37b"
+      "address": "0x145810eed8E9F0c4Ef8253507daa906E8AD1078b",
+      "transactionHash": "0xf191337a8464f1038677074d1a3e3069a4963a88dab714751e3c4adb6ffc920a"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-06-22T11:06:10.286Z",
-  "networkType": "ethereum",
+  "updatedAt": "2024-06-22T13:26:07.683Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -25,6 +25,6 @@ contract("CampaignFactory", accounts => {
     assert.ok(campaignInstance.address);
   });
 
-  // Additional test cases can be added here
+  // Additional test cases
 
 });
