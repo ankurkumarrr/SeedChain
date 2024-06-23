@@ -10,6 +10,7 @@ class CampaignIndex extends Component {
   render() {
     return (
       <div>
+        <h1>Total Campaigns: {this.props.campaigns.length}</h1>
         <h1>{this.props.campaigns[0]}</h1>
         <h1>{this.props.campaigns[1]}</h1>
       </div>
