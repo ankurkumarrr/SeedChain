@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.7.0",
+    "@truffle/hdwallet-provider": "^2.1.15",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.2.0",
     "ganache-cli": "^6.12.2",
@@ -19,6 +19,8 @@
     "node": "^20.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.5",
     "solc": "^0.8.26",
     "web3": "^4.10.0"
   },
