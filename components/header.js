@@ -1,11 +1,25 @@
-import React from 'react';
+import React from "react";
+import { Menu,Header } from "semantic-ui-react";
 
-const Header = () => {
-  return (
-    <div>
-      <h1>Welcome to My Web3 App</h1>
-    </div>
-  );
+export default () => {
+    return(
+        <Menu>
+            
+            <Menu.Item>
+            <Header as='h3' icon='block layout' content='SeedChain' />
+            </Menu.Item>
+
+        <Menu.Menu position="right">
+
+            <Menu.Item>
+            <Header as='h3' content='Campaigns' />
+            </Menu.Item>
+
+            <Menu.Item>
+            <Header as='h3' icon='add' content='' />
+            </Menu.Item>
+
+        </Menu.Menu>
+        </Menu>
+    );
 };
-
-export default Header;
