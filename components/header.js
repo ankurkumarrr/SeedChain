@@ -3,20 +3,20 @@ import { Menu,Header } from "semantic-ui-react";
 
 export default () => {
     return(
-        <Menu>
+        <Menu style={{marginTop: '10px'}}>
             
             <Menu.Item>
-            <Header as='h3' icon='block layout' content='SeedChain' />
+            SeedChain
             </Menu.Item>
 
         <Menu.Menu position="right">
 
             <Menu.Item>
-            <Header as='h3' content='Campaigns' />
+            Campaigns
             </Menu.Item>
 
             <Menu.Item>
-            <Header as='h3' icon='add' content='' />
+            +
             </Menu.Item>
 
         </Menu.Menu>
