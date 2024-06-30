@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Layout from '../../components/Layout';
 
 const CampaignShow = () => {
   return (
-    <h3>Show Campaigns</h3>
+    <Layout>
+      <h3>Show Campaigns</h3>
+    </Layout>
   );
 };
 
