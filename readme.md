@@ -1,5 +1,3 @@
----
-
 # SeedChain Project README
 
 - [Overview](#overview)
@@ -17,8 +15,6 @@
 - [Starting the Development Server](#starting-the-development-server)
 - [Updating Contract Addresses](#updating-contract-addresses)
 - [Additional Notes](#additional-notes)
-
----
 
 ## Overview
 
