@@ -14,7 +14,6 @@
 - [Running Tests](#running-tests)
 - [Starting the Development Server](#starting-the-development-server)
 - [Updating Contract Addresses](#updating-contract-addresses)
-  - [Updating web3.js Configuration](#updating-web3.js-configuration)
 - [Additional Notes](#additional-notes)
 
 ## Overview
