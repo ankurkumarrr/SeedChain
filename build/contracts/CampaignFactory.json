@@ -18,8 +18,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -45,8 +44,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"min\",\"type\":\"uint256\"}],\"name\":\"createCampaign\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"deployedCampaigns\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDeployedCampaigns\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Campaign.sol\":\"CampaignFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Campaign.sol\":{\"keccak256\":\"0x9e3cc617f7f79186911e0c4f3f0ec8c6cd9aa5bbc6f17c0c2633104506891f0a\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://510364a419a8e16f4934eab10f20ea70a6c15d469726f44212841a7cbd3082c9\",\"dweb:/ipfs/QmR6Z86cufGPnwhzUfz2jiGLPQ1t3vHcAhSXNzyxGFNvr6\"]}},\"version\":1}",
@@ -1067,7 +1065,7 @@
   "sourceMap": "74:368:0:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "74:368:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;106:34;;;;;;:::i;:::-;;:::i;:::-;;;-1:-1:-1;;;;;363:32:2;;;345:51;;333:2;318:18;106:34:0;;;;;;;;325:114;;;:::i;:::-;;;;;;;:::i;149:167::-;;;;;;:::i;:::-;;:::i;:::-;;106:34;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;106:34:0;;-1:-1:-1;106:34:0;:::o;325:114::-;378:16;414:17;407:24;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;407:24:0;;;;;;;;;;;;;;;;;;;;;;;325:114;:::o;149:167::-;201:20;237:3;242:10;224:29;;;;;:::i;:::-;1244:25:2;;;-1:-1:-1;;;;;1305:32:2;1300:2;1285:18;;1278:60;1232:2;1217:18;224:29:0;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;264:17:0;:44;;;;;;;;;;;;;;-1:-1:-1;;;;;;264:44:0;-1:-1:-1;;;;;264:44:0;;;;;;;;;;-1:-1:-1;;149:167:0:o;-1:-1:-1:-;;;;;;;;:::o;14:180:2:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:2;;14:180;-1:-1:-1;14:180:2:o;407:658::-;578:2;630:21;;;700:13;;603:18;;;722:22;;;549:4;;578:2;801:15;;;;775:2;760:18;;;549:4;844:195;858:6;855:1;852:13;844:195;;;923:13;;-1:-1:-1;;;;;919:39:2;907:52;;1014:15;;;;979:12;;;;955:1;873:9;844:195;;;-1:-1:-1;1056:3:2;;407:658;-1:-1:-1;;;;;;407:658:2:o",
   "source": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract CampaignFactory {\r\n    address[] public deployedCampaigns;\r\n\r\n    function createCampaign(uint min) public {\r\n        Campaign newCampaign = new Campaign(min, msg.sender);\r\n        deployedCampaigns.push(address(newCampaign));\r\n    } \r\n\r\n    function getDeployedCampaigns() public view returns (address[] memory) {\r\n        return deployedCampaigns;\r\n    }\r\n}\r\n\r\ncontract Campaign {\r\n\r\n    struct Request {\r\n        string description;\r\n        uint value;\r\n        address payable recipient;\r\n        bool complete;\r\n        uint approvalCount;\r\n        mapping(address => bool) approvals;\r\n    }\r\n\r\n    Request[] public requests;\r\n    address public manager;\r\n    uint public minContribution;\r\n    mapping(address => bool) public approvers;\r\n    uint public approversCount;\r\n    \r\n    modifier restricted() {\r\n        require(msg.sender == manager, \"Only manager can call this function\");\r\n        _;\r\n    }\r\n\r\n    constructor(uint min, address creator) {\r\n        manager = creator;    \r\n        minContribution = min;\r\n    }\r\n\r\n    function contribute() public payable {\r\n        require(msg.value > minContribution);\r\n\r\n        if (!approvers[msg.sender]) {\r\n            approvers[msg.sender] = true;\r\n            approversCount++;\r\n        }\r\n    } \r\n\r\n    function createRequest(string memory description, uint value, address payable recipient) public restricted {\r\n        Request storage newRequest = requests.push();\r\n        newRequest.description = description;\r\n        newRequest.value = value;\r\n        newRequest.recipient = recipient;\r\n        newRequest.complete = false;\r\n        newRequest.approvalCount = 0;\r\n        \r\n    }\r\n\r\n    function approveRequest(uint index) public  {\r\n        Request storage request = requests[index];\r\n\r\n        require(approvers[msg.sender], \"Only approvers can approve requests\");\r\n        require(!request.approvals[msg.sender], \"You have already approved this request\");\r\n        \r\n        request.approvals[msg.sender] = true;\r\n        request.approvalCount++;\r\n    }\r\n\r\n    function finalizeRequest(uint index) public restricted {\r\n        Request storage request = requests[index];\r\n\r\n        require(request.approvalCount > (approversCount/2), \"Not enough approvals\");\r\n        require(!request.complete, \"Request already finalized\");\r\n        require(address(this).balance >= request.value, \"Not enough balance in the contract\");\r\n\r\n        request.recipient.transfer(request.value);\r\n        request.complete = true;\r\n    }\r\n\r\n    function getSummary() public view returns (\r\n        uint, uint, uint, uint, address\r\n    ) {\r\n        return (\r\n            minContribution,\r\n            address(this).balance,\r\n            requests.length,\r\n            approversCount,\r\n            manager\r\n        );\r\n    }\r\n\r\n    function getRequestsCount() public view returns (uint) {\r\n        return requests.length;\r\n    }\r\n\r\n}",
-  "sourcePath": "C:\\Users\\ankur\\Desktop\\New folder (2)\\SeedChain\\contracts\\Campaign.sol",
+  "sourcePath": "C:\\Users\\ankur\\Desktop\\SeedChain\\contracts\\Campaign.sol",
   "ast": {
     "absolutePath": "project:/contracts/Campaign.sol",
     "exportedSymbols": {
@@ -4876,8 +4874,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-06-30T15:53:43.011Z",
-  "networkType": "ethereum",
+  "updatedAt": "2024-07-01T09:02:28.063Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

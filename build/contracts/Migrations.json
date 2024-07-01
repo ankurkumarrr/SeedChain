@@ -17,8 +17,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -31,8 +30,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -969,7 +967,7 @@
   "sourceMap": "69:558:1:-:0;;;294:45;;;;;;;;;-1:-1:-1;315:5:1;:18;;-1:-1:-1;;;;;;315:18:1;323:10;315:18;;;69:558;;;;;;",
   "deployedSourceMap": "69:558:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;456:168;;;;;;:::i;:::-;;:::i;:::-;;119:36;;;;;;;;;451:25:2;;;439:2;424:18;119:36:1;;;;;;;;94:20;;;;;-1:-1:-1;;;;;94:20:1;;;;;;-1:-1:-1;;;;;651:32:2;;;633:51;;621:2;606:18;94:20:1;487:203:2;345:105:1;;;;;;:::i;:::-;;:::i;456:168::-;213:5;;-1:-1:-1;;;;;213:5:1;199:10;:19;191:83;;;;-1:-1:-1;;;191:83:1;;;;;;;:::i;:::-;;;;;;;;;593:24:::1;::::0;571:47:::1;::::0;-1:-1:-1;;;571:47:1;;552:11;;-1:-1:-1;;;;;571:21:1;::::1;::::0;::::1;::::0;:47:::1;::::0;::::1;;451:25:2::0;;;439:2;424:18;;305:177;571:47:1::1;;;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;512:112;456:168:::0;:::o;345:105::-;213:5;;-1:-1:-1;;;;;213:5:1;199:10;:19;191:83;;;;-1:-1:-1;;;191:83:1;;;;;;;:::i;:::-;408:24:::1;:36:::0;345:105::o;14:286:2:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;168:23;;-1:-1:-1;;;;;220:31:2;;210:42;;200:70;;266:1;263;256:12;200:70;289:5;14:286;-1:-1:-1;;;14:286:2:o;695:180::-;754:6;807:2;795:9;786:7;782:23;778:32;775:52;;;823:1;820;813:12;775:52;-1:-1:-1;846:23:2;;695:180;-1:-1:-1;695:180:2:o;880:415::-;1082:2;1064:21;;;1121:2;1101:18;;;1094:30;1160:34;1155:2;1140:18;;1133:62;-1:-1:-1;;;1226:2:2;1211:18;;1204:49;1285:3;1270:19;;880:415::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.9.0;\r\n\r\ncontract Migrations {\r\n  address public owner;\r\n  uint public last_completed_migration;\r\n\r\n  modifier restricted() {\r\n    require(msg.sender == owner, \"This function is restricted to the contract's owner\");\r\n    _;\r\n  }\r\n\r\n  constructor() {\r\n    owner = msg.sender;\r\n  }\r\n\r\n  function setCompleted(uint completed) public restricted {\r\n    last_completed_migration = completed;\r\n  }\r\n\r\n  function upgrade(address new_address) public restricted {\r\n    Migrations upgraded = Migrations(new_address);\r\n    upgraded.setCompleted(last_completed_migration);\r\n  }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\ankur\\Desktop\\New folder (2)\\SeedChain\\contracts\\Migrations.sol",
+  "sourcePath": "C:\\Users\\ankur\\Desktop\\SeedChain\\contracts\\Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -1681,8 +1679,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-06-30T15:53:43.014Z",
-  "networkType": "ethereum",
+  "updatedAt": "2024-07-01T09:02:28.064Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

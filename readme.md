@@ -14,6 +14,7 @@
 - [Running Tests](#running-tests)
 - [Starting the Development Server](#starting-the-development-server)
 - [Updating Contract Addresses](#updating-contract-addresses)
+  - [Updating web3.js Configuration](#updating-web3.js-configuration)
 - [Additional Notes](#additional-notes)
 
 ## Overview
@@ -38,6 +39,7 @@ SeedChain/
 ├── utils/
 │   ├── campaign.js
 │   ├── factory.js
+│   ├── web3.js
 ├── test/
 │   └── campaign.test.js
 ├── truffle-config.js
@@ -53,7 +55,7 @@ Before starting, ensure you have the following installed:
 - Node.js (version >= 12)
 - npm (Node Package Manager)
 - Ganache (either CLI or GUI) for local Ethereum development
-- Metamask plugin installed in browser
+- Metamask plugin installed in your browser
 
 ## Installation
 
@@ -226,9 +228,33 @@ This command starts the development server using Next.js, allowing you to view a
 
 Ensure to replace `'0xYourNewContractAddress'` with the actual address of your deployed contract.
 
+### Updating `web3.js` Configuration
+
+1. Update the Ganache RPC URL and port in `web3.js`:
+
+   ```javascript
+   import Web3 from 'web3';
+
+   let web3;
+
+   if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+     // In the browser and MetaMask is running.
+     web3 = new Web3(window.ethereum);
+     window.ethereum.request({ method: 'eth_requestAccounts' });
+   } else {
+     // On the server or MetaMask is not available.
+     const provider = new Web3.providers.HttpProvider(
+       `${process.env.NEXT_PUBLIC_GANACHE_RPC_URL}:${process.env.NEXT_PUBLIC_GANACHE_PORT}`
+     );
+     web3 = new Web3(provider);
+   }
+
+   export default web3;
+   ```
+
+Ensure to replace `${process.env.NEXT_PUBLIC_GANACHE_RPC_URL}` and `${process.env.NEXT_PUBLIC_GANACHE_PORT}` with the actual URL and port of your Ganache instance.
+
 ## Additional Notes
 
 - Ensure Ganache (CLI or GUI) is running whenever interacting with the Ethereum network locally.
 - For production deployment, consider using a testnet or mainnet configuration in `truffle-config.js`.
-
----
