@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Layout from "../../components/Layout";
 import Campaign from "../../utils/campaign";
-import { Card, Grid } from "semantic-ui-react";
+import { Card, Grid, Button } from "semantic-ui-react";
 import web3 from "../../utils/web3";
 import ContributeForm from "../../components/ContributeForm";
+import { Link } from '../../routes';
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
@@ -12,6 +13,7 @@ class CampaignShow extends Component {
     const summary = await campaign.methods.getSummary().call();
 
     return {
+      address: props.query.address,
       minimumContribution: summary[0].toString(),
       balance: summary[1].toString(),
       requestsCount: summary[2].toString(),
@@ -74,10 +76,15 @@ class CampaignShow extends Component {
         <Grid>
           <Grid.Column width={10}>
             {this.renderCards()}
+            <Link route={`/campaigns/${this.props.address}/requests`}>
+              <a>
+                <button primary>View Requests</button>
+              </a>
+            </Link>
           </Grid.Column>
 
           <Grid.Column width={6}>
-            <ContributeForm />
+            <ContributeForm address={this.props.address} />
           </Grid.Column>
 
         </Grid>
